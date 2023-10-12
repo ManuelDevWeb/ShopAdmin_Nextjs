@@ -1,6 +1,25 @@
+// useRef permite hacer referencia a un elemento del DOM para obtener la informacion y manipularla
+import { useRef } from 'react';
+
+// Icons
 import { LockClosedIcon } from '@heroicons/react/solid';
 
 export default function LoginPage() {
+  // Referencias a los campos del formulario
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  // Funcion que se ejecuta cuando se envia el formulario
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+
+    // Obtener los valores de los campos del formulario
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
+    alert(`Email: ${email} - Password: ${password}`);
+  };
+
   return (
     <>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -9,14 +28,14 @@ export default function LoginPage() {
             <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form className="mt-8 space-y-6" onSubmit={handlerSubmit}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
                 <label htmlFor="email-address" className="sr-only">
                   Email address
                 </label>
-                <field
+                <input
                   id="email-address"
                   name="email"
                   type="email"
@@ -24,13 +43,14 @@ export default function LoginPage() {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
+                  ref={emailRef}
                 />
               </div>
               <div>
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>
-                <field
+                <input
                   id="password"
                   name="password"
                   type="password"
@@ -38,6 +58,7 @@ export default function LoginPage() {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
+                  ref={passwordRef}
                 />
               </div>
             </div>
