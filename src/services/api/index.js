@@ -12,7 +12,7 @@ export const endPoints = {
   },
   // Products
   products: {
-    getProducts: `${API}/${VERSION}/products`,
+    getProducts: (limit, offset) => `${API}/${VERSION}/products?limit=${limit}&offset=${offset}`,
     getProduct: (id) => `${API}/${VERSION}/products/${id}`,
     createProduct: `${API}/${VERSION}/products`,
     updateProduct: (id) => `${API}/${VERSION}/products/${id}`,
@@ -25,7 +25,7 @@ export const endPoints = {
     createUser: `${API}/${VERSION}/users`,
     updateUser: (id) => `${API}/${VERSION}/users/${id}`,
     deleteUser: (id) => `${API}/${VERSION}/users/${id}`,
-    availableUser: `${API}/${VERSION}/users/${id}/is-available`,
+    availableUser: (id) => `${API}/${VERSION}/users/${id}/is-available`,
   },
   // Categories
   categories: {

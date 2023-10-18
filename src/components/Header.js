@@ -2,11 +2,9 @@ import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 
-const userData = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-};
+// Custom hooks
+import { useAuth } from '@hooks/useAuth';
+
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
   { name: 'Productos', href: '/dashboard/products/', current: false },
@@ -23,6 +21,15 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+  // Obteniendo las funciones y estados del contexto
+  const { user } = useAuth();
+
+  const userData = {
+    name: user?.name,
+    email: user?.email,
+    imageUrl: user?.avatar,
+  };
+
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">

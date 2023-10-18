@@ -1,23 +1,67 @@
 // useRef permite hacer referencia a un elemento del DOM para obtener la informacion y manipularla
 import { useRef } from 'react';
+import { useRouter } from 'next/router';
 
 // Icons
 import { LockClosedIcon } from '@heroicons/react/solid';
+
+// Custom hooks
+import { useAuth } from '@hooks/useAuth';
+
+// Components
+import Loading from '@common/Loading';
 
 export default function LoginPage() {
   // Referencias a los campos del formulario
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
+  const router = useRouter();
+
+  // Obteniendo las funciones y estados del contexto
+  const { signIn, setError, error, loading, setLoading } = useAuth();
+
   // Funcion que se ejecuta cuando se envia el formulario
   const handlerSubmit = (e) => {
     e.preventDefault();
 
     // Obtener los valores de los campos del formulario
+    // email: admin@mail.com
+    // password: admin123
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    alert(`Email: ${email} - Password: ${password}`);
+    // Enviar los datos al contexto
+    signIn(email, password)
+      .then(() => {
+        setLoading(true);
+
+        // Redireccionar al dashboard
+        setTimeout(() => {
+          router.push('/dashboard');
+          setError(null);
+          setLoading(false);
+        }, 1500);
+      })
+      .catch((error) => {
+        setError(null);
+        setLoading(true);
+
+        setTimeout(() => {
+          if (error.response.status === 401) {
+            setError('Credenciales incorrectas');
+          } else if (error.request) {
+            setError('Error de conexion');
+          } else {
+            setError('Se ha producido un error');
+          }
+          setLoading(false);
+        }, 1500);
+
+        setTimeout(() => {
+          setError(null);
+        }, 5000);
+      });
   };
 
   return (
@@ -77,6 +121,14 @@ export default function LoginPage() {
                 </a>
               </div>
             </div>
+
+            {error && (
+              <div class="p-3 mb-3 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                <span class="font-medium">Error!</span> {error}
+              </div>
+            )}
+
+            {loading && <Loading />}
 
             <div>
               <button
