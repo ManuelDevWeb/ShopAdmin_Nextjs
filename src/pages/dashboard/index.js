@@ -28,7 +28,6 @@ export default function Dashboard() {
 
   // Si ya existe una categoria con ese nombre le sumamos 1, sino por defecto lo iniciamos en 1
   const countOccurrences = (arr) => arr.reduce((prev, curr) => ((prev[curr] = ++prev[curr] || 1), prev), {});
-  console.log(countOccurrences(categoryNames));
 
   // Objeto con la estructura necesaria para pintar las graficas
   const dataParser = {
