@@ -10,6 +10,7 @@ const useFetch = (endpoint) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setError(null);
         setLoading(true);
 
         setTimeout(async () => {

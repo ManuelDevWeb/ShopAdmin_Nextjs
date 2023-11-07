@@ -1,11 +1,11 @@
 export default function Pagination({ offset, setOffset }) {
   const handlePrev = () => {
-    if (offset <= 5) return;
-    setOffset(offset - 5);
+    if (offset <= 10) return;
+    setOffset(offset - 10);
   };
 
   const handleNext = () => {
-    setOffset(offset + 5);
+    setOffset(offset + 10);
   };
 
   return (
@@ -14,7 +14,7 @@ export default function Pagination({ offset, setOffset }) {
         <button
           onClick={handlePrev}
           className={`${
-            offset <= 5 && 'opacity-50 cursor-not-allowed'
+            offset <= 10 && 'opacity-50 cursor-not-allowed'
           } relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50`}
         >
           Previous
